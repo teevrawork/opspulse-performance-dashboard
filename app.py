@@ -283,11 +283,10 @@ Rules:
                                 "Please try again later."
                             )
 
-            except Exception:
-                st.error(
-                    "AI request failed. Check your free-tier "
-                    "quota, model access, API key, and app logs."
-                )
+           
+            except Exception as e:
+                st.error("Gemini API request failed.")
+                st.code(str(e)))
 
         if st.session_state.ai_report:
             st.markdown(st.session_state.ai_report)
