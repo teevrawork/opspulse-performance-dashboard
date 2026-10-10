@@ -101,3 +101,53 @@ with st.expander("Project notes & limitations"):
     - In a production version, the data source could be a governed database/warehouse, and an LLM could summarize validated metrics with access controls and human review.
     - Dent counts and quality scores here are illustrative fields, not a universal performance standard.
     """)
+
+st.divider()
+st.header("🧠 Smart Performance Insights")
+
+if filtered.empty:
+    st.info("No data available for the selected filters.")
+else:
+    total_dents = filtered["dents"].sum()
+    average_quality = filtered["quality_score"].mean()
+
+    if average_quality < 90:
+        st.warning(
+            "Quality Alert: Average quality is below 90. "
+            "Review tasks with lower quality scores."
+        )
+    else:
+        st.success(
+            "Quality Insight: Average quality is healthy "
+            "for the selected data."
+        )
+
+ if total_dents > 20:
+        st.warning(
+            "Dent Risk: High number of dents detected. "
+            "Investigate recurring task errors."
+        )
+    else:
+        st.success(
+            "Dent Insight: Dent count is within the demo threshold."
+        )
+
+    member_performance = (
+      filtered.groupby("analyst")["quality_score"]
+        .mean()
+        .sort_values(ascending=False)
+    )
+
+    best_member = member_performance.index[0]
+
+    st.info(
+        f"Top Quality Performer: {best_member} "
+        "has the highest average quality score "
+        "for the selected filters."
+    )
+
+    st.caption(
+        "Insights are generated using rule-based analytics "
+        "on synthetic sample data. Thresholds are illustrative."
+    )
+
