@@ -262,9 +262,11 @@ Rules:
                     st.error("Gemini API key is missing.")
                 else:
                     with st.spinner("Gemini is analyzing performance..."):
-                        client = genai.Client(
-                            api_key=st.secrets["GEMINI_API_KEY"]
-                        )
+                      gemini_key = str(st.secrets["GEMINI_API_KEY"]).strip()
+
+client = genai.Client(
+    api_key=gemini_key
+)
 
                         response = client.models.generate_content(
                             model="gemini-2.5-flash-lite",
