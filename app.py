@@ -257,51 +257,14 @@ Rules:
 - Keep the report under 300 words.
 """
 
-            
             try:
                 if "GEMINI_API_KEY" not in st.secrets:
                     st.error("Gemini API key is missing.")
                 else:
                     with st.spinner("Gemini is analyzing performance..."):
-                        gemini_key = str(st.secrets["GEMINI_API_KEY"]).strip()
-
-                        import hashlib
-                        st.write("Key length:", len(gemini_key))
-                        st.write(
-                            "Key fingerprint:",
-                            hashlib.sha256(gemini_key.encode()).hexdigest()[:12]
-                        )
-
                         client = genai.Client(
-                            api_key=gemini_key
+                            api_key=st.secrets["GEMINI_API_KEY"]
                         )
-
-                        response = client.models.generate_content(
-                            model="gemini-2.5-flash-lite",
-                            contents=prompt,
-                            config=types.GenerateContentConfig(
-                                temperature=0.2,
-                                max_output_tokens=900
-                            )
-                        )
-
-                        if response.text:
-                            st.session_state.ai_report = response.text
-                        else:
-                            st.warning(
-                                "Gemini returned no text. "
-                                "Please try again later."
-                            )
-
-            except Exception as e:
-                st.error("Gemini API request failed.")
-                st.code(str(e))
-
-
-
-client = genai.Client(
-    api_key=gemini_key
-)
 
                         response = client.models.generate_content(
                             model="gemini-2.5-flash-lite",
@@ -332,6 +295,3 @@ client = genai.Client(
             "Prototype access control and session request limit. "
             "Not a global quota limit or production security system."
         )
-
-
-
