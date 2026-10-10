@@ -122,7 +122,7 @@ else:
             "for the selected data."
         )
 
- if total_dents > 20:
+    if total_dents > 20:
         st.warning(
             "Dent Risk: High number of dents detected. "
             "Investigate recurring task errors."
@@ -133,7 +133,7 @@ else:
         )
 
     member_performance = (
-      filtered.groupby("analyst")["quality_score"]
+        filtered.groupby("analyst")["quality_score"]
         .mean()
         .sort_values(ascending=False)
     )
@@ -150,4 +150,5 @@ else:
         "Insights are generated using rule-based analytics "
         "on synthetic sample data. Thresholds are illustrative."
     )
+
 
