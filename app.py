@@ -263,13 +263,19 @@ Rules:
                 else:
                     with st.spinner("Gemini is analyzing performance..."):
                       gemini_key = str(st.secrets["GEMINI_API_KEY"]).strip()
-                        import hashlib
+gemini_key = str(st.secrets["GEMINI_API_KEY"]).strip()
 
-st.write("Key length:", len(gemini_key))
-st.write(
-    "Key fingerprint:",
-    hashlib.sha256(gemini_key.encode()).hexdigest()[:12]
-)
+                        import hashlib
+                        st.write("Key length:", len(gemini_key))
+                        st.write(
+                            "Key fingerprint:",
+                            hashlib.sha256(gemini_key.encode()).hexdigest()[:12]
+                        )
+
+                        client = genai.Client(
+                            api_key=gemini_key
+                        )
+
 
 client = genai.Client(
     api_key=gemini_key
